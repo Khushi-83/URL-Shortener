@@ -1,6 +1,7 @@
 const express = require('express');
 const {connectToMongoDB} = require("./connectDB");
 const urlRoute = require('./routes/url');
+const path = require('path')
 const app = express();
 const PORT = 3000;
 
@@ -21,6 +22,9 @@ app.get('/:shortID', async(req, res) => {
     );
     res.redirect(entry.redirectURL)
     })
+
+app.set("view engine", "ejs");  
+app.set("views", path.resolve("./views")); 
 
 connectToMongoDB("mongodb://127.0.0.1:27017/url-shortener")
 .then(() => console.log("MongoDB Successfully Connected"))
